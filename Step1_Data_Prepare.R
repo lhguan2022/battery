@@ -114,7 +114,7 @@
 
 
 
-# 12. the first row of each dataframe in batch 1 
+# 11. the first row of each dataframe in batch 1 
 #     are all zeros, we remove them
 
     for(i in 1:41){
