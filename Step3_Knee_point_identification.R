@@ -196,4 +196,44 @@
         remove(list = c("batch", "number", "n1", "n2", "n3"))
         abline(h=0.88, lty=2)
     }
+
+    # early cycles
+    {
+        plot(x=-1, y=-1, xlim=c(0, 300), ylim=c(1.02, 1.1),
+             xlab="cycle", ylab="capacity", main="Early cycles")
+        n1 <- c(1:10, 17, 18)
+        n2 <- c(1, 2, 4, 5, 7, 10, 11, 14, 15, 43)
+        n3 <- c(6, 7, 16, 17, 21, 27, 31, 35, 40)
+        for(batch in 1:3){
+            for(number in 1:BatchNum[batch]){
+                if(batch==1 && number %in% n1) next
+                if(batch==2 && number %in% n2) next
+                if(batch==3 && number %in% n3) next
+                if(batch==1){
+                    points(QD.GAM[[batch]][[number]][1:300,], 
+                           lwd = 2, type="l", col = 2)
+                }else if(batch==2){
+                    points(QD.GAM[[batch]][[number]][1:300,], 
+                           lwd = 2, type="l", col = 3)
+                }else{
+                    points(QD.GAM[[batch]][[number]][1:300,], 
+                           lwd = 2, type="l", col = 4)
+                }
+            }
+        }
+        remove(list = c("batch", "number", "n1", "n2", "n3"))
+        legend("bottomleft",
+               legend=c("batch 1", "batch 2", "batch 3"),
+               col=c(2, 3, 4), pch=20)
+    }
+        
+    # boxplot for 3 batches
+    k <- c(Knee[[1]], Knee[[2]], Knee[[3]])
+    batch <- c(rep("1", BatchNum[1]), rep("2", BatchNum[2]), rep("3", BatchNum[3]))
+    batch <- factor(batch)
+    data <- data.frame(Knee = k, Batch = batch)
+    remove(list = c("k", "batch"))
+    boxplot(Knee ~ Batch, data = data,
+            main = "Boxplot for Knee in each Batch ",
+            xlab="Batch", ylab="Knee")
     
